@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from "framer-motion";
 
-// 👇 [핵심] 외부 파일에서 불러오지 않고, 여기서 직접 정의합니다.
+// 👇 [핵심] 외부 파일에서 불러오지 않고, 여기서 직접 정의합니다. (import 문 없음!)
 interface Profile {
   name: string;
   role: string;
@@ -115,7 +115,8 @@ const IntroCard: React.FC<{ profile?: Profile }> = ({ profile = defaultProfile }
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
-      className="max-w-sm mx-auto w-full"
+      // 👇 [수정됨] mt-32를 추가하여 카드를 아래로 내렸습니다.
+      className="max-w-sm mx-auto w-full mt-32"
     >
       <Card className="rounded-2xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-br from-white to-slate-50 p-6">
