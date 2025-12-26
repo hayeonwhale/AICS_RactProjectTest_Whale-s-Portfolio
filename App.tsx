@@ -109,27 +109,54 @@ const myWebsites: Website[] = [
   }
 ];
 
-const Hero: React.FC = () => (
-  <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-    <div 
-      className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[15s] hover:scale-110"
-      style={{ 
-        backgroundImage: `url('https://images.unsplash.com/photo-1518443858000-880492160677?auto=format&fit=crop&q=80&w=2000')`,
-      }}
-    />
-    <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px]"></div>
-    
-    <div className="relative z-10 text-center px-6 max-w-6xl animate-fade-in-up">
-      <h1 className="text-[#2a2a2a] text-6xl md:text-9xl font-serif font-light mb-12 tracking-tight leading-tight drop-shadow-sm">
-        Whale's <br className="md:hidden" /> Website Portfolio
-      </h1>
-      <div className="w-20 h-[1px] bg-[#2a2a2a]/20 mx-auto mb-12"></div>
-      <p className="text-[#2a2a2a]/40 text-base md:text-xl font-light tracking-[0.4em] uppercase">
-        Digital Exploration & Creative Curation
-      </p>
+const Hero: React.FC = () => {
+  const backgroundImages = [
+    'https://images.unsplash.com/photo-1518443858000-880492160677?auto=format&fit=crop&q=80&w=2000', // Forest/Mist
+    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=2000', // Nature/Green
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000', // Tech/Abstract
+    'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&q=80&w=2000', // Books/Knowledge
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000'  // Waterfall/Landscape
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-slate-50">
+      {backgroundImages.map((img, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out`}
+          style={{
+            backgroundImage: `url('${img}')`,
+            opacity: currentImageIndex === index ? 1 : 0,
+            zIndex: 0
+          }}
+        />
+      ))}
+
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-[1]"></div>
+
+      <div className="relative z-10 text-center px-6 max-w-6xl animate-fade-in-up">
+        <h1 className="text-[#2a2a2a] text-6xl md:text-9xl font-serif font-light mb-12 tracking-tight leading-tight drop-shadow-sm">
+          Whale's <br className="md:hidden" /> Website Portfolio
+        </h1>
+        <div className="w-20 h-[1px] bg-[#2a2a2a]/20 mx-auto mb-12"></div>
+        <p className="text-[#2a2a2a]/60 text-base md:text-xl font-light tracking-[0.4em] uppercase">
+          Digital Exploration & Creative Curation
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const PortfolioContent: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -140,7 +167,7 @@ const PortfolioContent: React.FC = () => {
     : myWebsites.filter(w => w.category === categoryFilter);
 
   const getCategoryTitle = () => {
-    switch(categoryFilter) {
+    switch (categoryFilter) {
       case 'visual': return 'Visual Design';
       case 'art': return 'Art Works';
       case 'playground': return 'Playground';
@@ -181,15 +208,15 @@ const ProjectDetail: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-[#fcfcfc] animate-fade-in-up flex flex-col items-center justify-center">
       {/* Floating Back Button */}
-      <button 
+      <button
         onClick={() => navigate('/')}
         className="fixed bottom-10 left-10 z-[60] w-14 h-14 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
         aria-label="Back to home"
       >
-        <svg 
-          className="w-6 h-6 text-slate-600 group-hover:text-slate-900 transition-colors" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-6 h-6 text-slate-600 group-hover:text-slate-900 transition-colors"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
