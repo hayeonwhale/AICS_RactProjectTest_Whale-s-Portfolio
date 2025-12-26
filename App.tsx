@@ -111,7 +111,7 @@ const myWebsites: Website[] = [
 
 const Hero: React.FC = () => {
   const backgroundImages = [
-    '/images/wind-ghibli-background.jpg', // Uploaded Ghibli-style image
+    `${import.meta.env.BASE_URL}images/wind-ghibli-background.jpg`, // Uploaded Ghibli-style image
     'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=2000', // Nature/Green
     'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000', // Tech/Abstract
     'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&q=80&w=2000', // Books/Knowledge
