@@ -111,8 +111,8 @@ const myWebsites: Website[] = [
 
 const Hero: React.FC = () => {
   const backgroundImages = [
-    `${import.meta.env.BASE_URL}images/dayOcean.jpeg`, // Uploaded Ghibli-style image
-    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=2000', // Nature/Green
+    `${import.meta.env.BASE_URL}images/dayOcean.jpeg`,
+    `${import.meta.env.BASE_URL}images/jellyfishOcean.jpeg`,
     'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000', // Tech/Abstract
     'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&q=80&w=2000', // Books/Knowledge
     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000'  // Waterfall/Landscape
