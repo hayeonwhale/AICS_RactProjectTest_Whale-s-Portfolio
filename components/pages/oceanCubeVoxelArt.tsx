@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 👈 추가됨
+import BackButton from '../BackButton';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -46,7 +47,7 @@ const VoxelOceanScene: React.FC = () => {
     scene.fog = new THREE.Fog(PALETTE.bg, 20, 60);
 
     const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
-    
+
     // 카메라 위치 조정
     camera.position.set(24, 22, 24);
     camera.lookAt(0, 8, 0);
@@ -55,7 +56,7 @@ const VoxelOceanScene: React.FC = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    
+
     // Clean and append
     containerRef.current.innerHTML = '';
     containerRef.current.appendChild(renderer.domElement);
@@ -64,7 +65,7 @@ const VoxelOceanScene: React.FC = () => {
     controls.enableDamping = true;
     controls.minDistance = 10;
     controls.maxDistance = 60;
-    
+
     // 컨트롤 타겟 조정
     controls.target.set(0, 8, 0);
 
@@ -87,7 +88,7 @@ const VoxelOceanScene: React.FC = () => {
 
     // --- 3. Helpers & Materials ---
     const matCache: { [key: string]: THREE.MeshLambertMaterial } = {};
-    
+
     const getMat = (color: number, transparent = false, opacity = 1.0) => {
       const key = `${color}-${opacity}`;
       if (!matCache[key]) {
@@ -101,9 +102,9 @@ const VoxelOceanScene: React.FC = () => {
     };
 
     const createVoxel = (
-      color: number, 
-      x: number, y: number, z: number, 
-      sx = 1, sy = 1, sz = 1, 
+      color: number,
+      x: number, y: number, z: number,
+      sx = 1, sy = 1, sz = 1,
       parent: THREE.Object3D = scene
     ) => {
       const geo = new THREE.BoxGeometry(sx, sy, sz);
@@ -126,11 +127,11 @@ const VoxelOceanScene: React.FC = () => {
     createVoxel(PALETTE.sand, -3.5, 0.5, -3.5, 7, 1, 7, sandGroup);
 
     // Sand speckles
-    for(let i=0; i<15; i++) {
-        const x = (Math.random() * 12) - 6;
-        const z = (Math.random() * 12) - 6;
-        const y = (x < 0 && z < 0) ? 1.05 : 0.05;
-        createVoxel(PALETTE.sandDark, x, y, z, 0.2, 0.1, 0.2, sandGroup);
+    for (let i = 0; i < 15; i++) {
+      const x = (Math.random() * 12) - 6;
+      const z = (Math.random() * 12) - 6;
+      const y = (x < 0 && z < 0) ? 1.05 : 0.05;
+      createVoxel(PALETTE.sandDark, x, y, z, 0.2, 0.1, 0.2, sandGroup);
     }
 
     // [Big Blue Block]
@@ -149,17 +150,17 @@ const VoxelOceanScene: React.FC = () => {
     const spongeTop = createVoxel(PALETTE.spongePurple, 0, 7.5, -1, 3, 3, 3, spongeGroup);
 
     const addPores = (parentMesh: THREE.Mesh, color: number, count: number) => {
-        const tempGeo = new THREE.BoxGeometry(0.4, 0.4, 0.1);
-        const tempMat = getMat(color);
-        for(let i=0; i<count; i++) {
-            const mesh = new THREE.Mesh(tempGeo, tempMat);
-            mesh.position.set((Math.random()-0.5)*2.5, (Math.random()-0.5)*2.5, 1.51);
-            parentMesh.add(mesh);
-            const meshSide = mesh.clone();
-            meshSide.rotation.y = Math.PI/2;
-            meshSide.position.set(1.51, (Math.random()-0.5)*2.5, (Math.random()-0.5)*2.5);
-            parentMesh.add(meshSide);
-        }
+      const tempGeo = new THREE.BoxGeometry(0.4, 0.4, 0.1);
+      const tempMat = getMat(color);
+      for (let i = 0; i < count; i++) {
+        const mesh = new THREE.Mesh(tempGeo, tempMat);
+        mesh.position.set((Math.random() - 0.5) * 2.5, (Math.random() - 0.5) * 2.5, 1.51);
+        parentMesh.add(mesh);
+        const meshSide = mesh.clone();
+        meshSide.rotation.y = Math.PI / 2;
+        meshSide.position.set(1.51, (Math.random() - 0.5) * 2.5, (Math.random() - 0.5) * 2.5);
+        parentMesh.add(meshSide);
+      }
     };
     addPores(spongeBottom, 0xC75E81, 6);
     addPores(spongeTop, 0x8040A0, 4);
@@ -167,26 +168,26 @@ const VoxelOceanScene: React.FC = () => {
     // [Vegetation]
     const seaGrasses: THREE.Group[] = [];
     const createSeagrass = (x: number, z: number, h: number, color: number) => {
-        const grass = new THREE.Group();
-        grass.position.set(x, 0, z);
-        grass.userData = { offset: Math.random() * 10, speed: 1 + Math.random() };
-        for(let i=0; i<3; i++) {
-            const bladeH = h * (0.8 + Math.random()*0.4);
-            createVoxel(color, (i*0.2)-0.2, bladeH/2, 0, 0.1, bladeH, 0.1, grass);
-        }
-        world.add(grass);
-        return grass;
+      const grass = new THREE.Group();
+      grass.position.set(x, 0, z);
+      grass.userData = { offset: Math.random() * 10, speed: 1 + Math.random() };
+      for (let i = 0; i < 3; i++) {
+        const bladeH = h * (0.8 + Math.random() * 0.4);
+        createVoxel(color, (i * 0.2) - 0.2, bladeH / 2, 0, 0.1, bladeH, 0.1, grass);
+      }
+      world.add(grass);
+      return grass;
     };
 
-    for(let i=0; i<8; i++) {
-        const x = -2 + Math.random()*2;
-        const z = 2 + Math.random()*2;
-        seaGrasses.push(createSeagrass(x, z, 3 + Math.random()*2, PALETTE.seagrass));
+    for (let i = 0; i < 8; i++) {
+      const x = -2 + Math.random() * 2;
+      const z = 2 + Math.random() * 2;
+      seaGrasses.push(createSeagrass(x, z, 3 + Math.random() * 2, PALETTE.seagrass));
     }
-    for(let i=0; i<5; i++) {
-        const x = 2 + Math.random()*1.5;
-        const z = 2 + Math.random()*1.5;
-        seaGrasses.push(createSeagrass(x, z, 2 + Math.random(), PALETTE.seagrass));
+    for (let i = 0; i < 5; i++) {
+      const x = 2 + Math.random() * 1.5;
+      const z = 2 + Math.random() * 1.5;
+      seaGrasses.push(createSeagrass(x, z, 2 + Math.random(), PALETTE.seagrass));
     }
 
     // Coral
@@ -196,12 +197,12 @@ const VoxelOceanScene: React.FC = () => {
     createVoxel(PALETTE.coralPink, 0, 0, 0, 1.5, 0.5, 1.5, coral);
     const coralMat = getMat(PALETTE.coralPink);
     const coralGeo = new THREE.BoxGeometry(0.2, 1.2, 0.2);
-    for(let i=0; i<8; i++) {
-        const branch = new THREE.Mesh(coralGeo, coralMat);
-        branch.position.set((Math.random()-0.5), 0.6, (Math.random()-0.5));
-        branch.rotation.x = (Math.random()-0.5);
-        branch.rotation.z = (Math.random()-0.5);
-        coral.add(branch);
+    for (let i = 0; i < 8; i++) {
+      const branch = new THREE.Mesh(coralGeo, coralMat);
+      branch.position.set((Math.random() - 0.5), 0.6, (Math.random() - 0.5));
+      branch.rotation.x = (Math.random() - 0.5);
+      branch.rotation.z = (Math.random() - 0.5);
+      coral.add(branch);
     }
 
     // Sea Pickles
@@ -221,11 +222,11 @@ const VoxelOceanScene: React.FC = () => {
     dolphinGroup.rotation.z = -Math.PI / 8;
     dolphinGroup.rotation.y = -Math.PI / 8;
     world.add(dolphinGroup);
-    
-    createVoxel(PALETTE.dolphin, 0, 0, 0, 4, 1.8, 1.8, dolphinGroup); 
-    createVoxel(PALETTE.dolphin, -2.2, -0.2, 0, 0.8, 0.8, 1, dolphinGroup); 
-    createVoxel(PALETTE.dolphin, 2.2, 0, 0, 1.5, 1.2, 1.2, dolphinGroup); 
-    createVoxel(PALETTE.dolphin, 3.2, 0, 0, 0.5, 0.2, 2.5, dolphinGroup); 
+
+    createVoxel(PALETTE.dolphin, 0, 0, 0, 4, 1.8, 1.8, dolphinGroup);
+    createVoxel(PALETTE.dolphin, -2.2, -0.2, 0, 0.8, 0.8, 1, dolphinGroup);
+    createVoxel(PALETTE.dolphin, 2.2, 0, 0, 1.5, 1.2, 1.2, dolphinGroup);
+    createVoxel(PALETTE.dolphin, 3.2, 0, 0, 0.5, 0.2, 2.5, dolphinGroup);
     const dorsal = createVoxel(PALETTE.dolphin, -0.5, 1, 0, 1, 1, 0.2, dolphinGroup);
     dorsal.rotation.z = -0.5;
     const finL = createVoxel(PALETTE.dolphin, -1, -0.5, 1, 1, 0.2, 0.8, dolphinGroup);
@@ -238,18 +239,18 @@ const VoxelOceanScene: React.FC = () => {
     animatables.push({ mesh: dolphinGroup, type: 'float', speed: 1, dist: 0.5, offset: 0 });
 
     // Fish
-    const createFish = (x: number, y: number, z: number, scale=1) => {
-        const fish = new THREE.Group();
-        fish.position.set(x, y, z);
-        fish.scale.set(scale, scale, scale);
-        createVoxel(PALETTE.fishYellow, 0, 0, 0, 1.2, 0.8, 0.4, fish);
-        createVoxel(PALETTE.fishBlue, -0.2, 0, 0.01, 0.2, 0.82, 0.42, fish);
-        createVoxel(PALETTE.fishBlue, 0.3, 0, 0.01, 0.2, 0.82, 0.42, fish);
-        createVoxel(PALETTE.fishYellow, 0.8, 0, 0, 0.4, 0.6, 0.1, fish);
-        createVoxel(0x000000, -0.4, 0.1, 0.21, 0.1, 0.1, 0.1, fish);
-        createVoxel(0x000000, -0.4, 0.1, -0.21, 0.1, 0.1, 0.1, fish);
-        world.add(fish);
-        animatables.push({ mesh: fish, type: 'swim', speed: 2 + Math.random(), dist: 0.2, offset: Math.random()*10 });
+    const createFish = (x: number, y: number, z: number, scale = 1) => {
+      const fish = new THREE.Group();
+      fish.position.set(x, y, z);
+      fish.scale.set(scale, scale, scale);
+      createVoxel(PALETTE.fishYellow, 0, 0, 0, 1.2, 0.8, 0.4, fish);
+      createVoxel(PALETTE.fishBlue, -0.2, 0, 0.01, 0.2, 0.82, 0.42, fish);
+      createVoxel(PALETTE.fishBlue, 0.3, 0, 0.01, 0.2, 0.82, 0.42, fish);
+      createVoxel(PALETTE.fishYellow, 0.8, 0, 0, 0.4, 0.6, 0.1, fish);
+      createVoxel(0x000000, -0.4, 0.1, 0.21, 0.1, 0.1, 0.1, fish);
+      createVoxel(0x000000, -0.4, 0.1, -0.21, 0.1, 0.1, 0.1, fish);
+      world.add(fish);
+      animatables.push({ mesh: fish, type: 'swim', speed: 2 + Math.random(), dist: 0.2, offset: Math.random() * 10 });
     };
     createFish(2, 4, 3, 1);
     createFish(-1, 3, 4, 0.8);
@@ -257,13 +258,13 @@ const VoxelOceanScene: React.FC = () => {
 
     // Tiny Fish
     const createTinyFish = (x: number, y: number, z: number) => {
-        const f = new THREE.Group();
-        f.position.set(x, y, z);
-        createVoxel(0x7CFC00, 0, 0, 0, 0.4, 0.4, 0.4, f);
-        createVoxel(0x32CD32, 0.3, 0, 0, 0.2, 0.2, 0.1, f);
-        createVoxel(0x000000, -0.1, 0.1, 0.21, 0.1, 0.1, 0.1, f);
-        world.add(f);
-        animatables.push({ mesh: f, type: 'swim', speed: 4, dist: 0.1, offset: Math.random()*10 });
+      const f = new THREE.Group();
+      f.position.set(x, y, z);
+      createVoxel(0x7CFC00, 0, 0, 0, 0.4, 0.4, 0.4, f);
+      createVoxel(0x32CD32, 0.3, 0, 0, 0.2, 0.2, 0.1, f);
+      createVoxel(0x000000, -0.1, 0.1, 0.21, 0.1, 0.1, 0.1, f);
+      world.add(f);
+      animatables.push({ mesh: f, type: 'swim', speed: 4, dist: 0.1, offset: Math.random() * 10 });
     };
     createTinyFish(-1.5, 4.5, -2);
     createTinyFish(0.5, 1.5, 4);
@@ -284,13 +285,13 @@ const VoxelOceanScene: React.FC = () => {
     // [Water Volume]
     const waterGeo = new THREE.BoxGeometry(14, 14, 14);
     const waterMat = new THREE.MeshPhysicalMaterial({
-        color: PALETTE.water,
-        transparent: true,
-        opacity: 0.2,
-        roughness: 0.1,
-        metalness: 0.1,
-        transmission: 0.1,
-        side: THREE.DoubleSide
+      color: PALETTE.water,
+      transparent: true,
+      opacity: 0.2,
+      roughness: 0.1,
+      metalness: 0.1,
+      transmission: 0.1,
+      side: THREE.DoubleSide
     });
     const waterVolume = new THREE.Mesh(waterGeo, waterMat);
     waterVolume.position.set(0, 5, 0);
@@ -303,56 +304,56 @@ const VoxelOceanScene: React.FC = () => {
     let animationId: number;
 
     const animate = () => {
-        animationId = requestAnimationFrame(animate);
-        const time = clock.getElapsedTime();
+      animationId = requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
 
-        // Animate Seagrass
-        seaGrasses.forEach(grass => {
-            const sway = Math.sin(time * grass.userData.speed + grass.userData.offset) * 0.05;
-            grass.rotation.z = sway;
-            grass.rotation.x = sway * 0.5;
-        });
+      // Animate Seagrass
+      seaGrasses.forEach(grass => {
+        const sway = Math.sin(time * grass.userData.speed + grass.userData.offset) * 0.05;
+        grass.rotation.z = sway;
+        grass.rotation.x = sway * 0.5;
+      });
 
-        // Animate Mobs
-        animatables.forEach(obj => {
-            if (obj.type === 'float') {
-                obj.mesh.position.y = 10 + Math.sin(time * obj.speed) * obj.dist;
-                obj.mesh.rotation.z = -Math.PI/8 + Math.cos(time * obj.speed) * 0.05;
-            } else if (obj.type === 'swim') {
-                obj.mesh.position.y = obj.mesh.position.y + Math.sin(time * obj.speed + obj.offset) * 0.002;
-                obj.mesh.position.x += Math.sin(time * 0.5 + obj.offset) * 0.005;
-            } else if (obj.type === 'hover') {
-                obj.mesh.position.y = 0.5 + Math.sin(time * obj.speed) * obj.dist;
-            }
-        });
+      // Animate Mobs
+      animatables.forEach(obj => {
+        if (obj.type === 'float') {
+          obj.mesh.position.y = 10 + Math.sin(time * obj.speed) * obj.dist;
+          obj.mesh.rotation.z = -Math.PI / 8 + Math.cos(time * obj.speed) * 0.05;
+        } else if (obj.type === 'swim') {
+          obj.mesh.position.y = obj.mesh.position.y + Math.sin(time * obj.speed + obj.offset) * 0.002;
+          obj.mesh.position.x += Math.sin(time * 0.5 + obj.offset) * 0.005;
+        } else if (obj.type === 'hover') {
+          obj.mesh.position.y = 0.5 + Math.sin(time * obj.speed) * obj.dist;
+        }
+      });
 
-        // Gentle world rotation
-        world.rotation.y = Math.sin(time * 0.1) * 0.1;
+      // Gentle world rotation
+      world.rotation.y = Math.sin(time * 0.1) * 0.1;
 
-        controls.update();
-        renderer.render(scene, camera);
+      controls.update();
+      renderer.render(scene, camera);
     };
 
     animate();
 
     // --- Resize Handler ---
     const handleResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener('resize', handleResize);
 
     // --- Cleanup ---
     return () => {
-        window.removeEventListener('resize', handleResize);
-        cancelAnimationFrame(animationId);
-        
-        if (containerRef.current) {
-            containerRef.current.innerHTML = '';
-        }
-        
-        renderer.dispose();
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationId);
+
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+      }
+
+      renderer.dispose();
     };
 
   }, []);
@@ -372,17 +373,10 @@ const VoxelOceanScene: React.FC = () => {
           Loading Voxel World...
         </div>
       )}
-      
+
       {/* 🔙 뒤로가기 버튼 */}
-      <button 
-          onClick={() => navigate('/')}
-          className="fixed bottom-10 left-10 w-14 h-14 flex items-center justify-center rounded-full bg-white border border-slate-200 shadow-2xl z-[9999] text-slate-600 hover:text-black hover:scale-110 transition-all cursor-pointer"
-          aria-label="Back to home"
-      >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-      </button>
+      {/* 🔙 뒤로가기 버튼 */}
+      <BackButton />
 
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
     </div>

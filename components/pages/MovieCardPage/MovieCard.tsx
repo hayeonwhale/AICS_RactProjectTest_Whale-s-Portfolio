@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import BackButton from '../../BackButton';
+
 // --- 일러스트레이션 (변경 없음) ---
 const ZoneOfInterestIllustration: React.FC = () => {
   return (
@@ -79,7 +81,7 @@ const ZoneOfInterestIllustration: React.FC = () => {
 
 // --- 메인 페이지 컴포넌트 ---
 const MovieCard: React.FC = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate(); // BackButton handles navigation now
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -87,18 +89,10 @@ const MovieCard: React.FC = () => {
 
     return (
         // 👇 [핵심] div로 변경, flex 제거, pt-40로 넉넉한 여백
-        <div className="bg-[#e8e6d9] min-h-screen w-full pt-40 pb-20 px-4 relative">
+        <div className="bg-[#e8e6d9] min-h-screen w-full flex items-center justify-center relative px-4 pt-24">
             
             {/* 👇 [핵심] z-[9999] 추가로 모든 레이어 뚫고 나오게 설정 */}
-            <button 
-                onClick={() => navigate('/')}
-                className="fixed bottom-10 left-10 w-14 h-14 flex items-center justify-center rounded-full bg-white border border-slate-200 shadow-2xl z-[9999] text-slate-600 hover:text-black hover:scale-110 transition-all cursor-pointer"
-                aria-label="Back to home"
-            >
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </button>
+            <BackButton />
 
             {/* 카드 본문: mx-auto로 수평 중앙 정렬 유지 */}
             <div className="mx-auto max-w-sm w-full bg-[#f4f3ed] rounded-xl shadow-2xl shadow-stone-400/30 overflow-hidden transform hover:scale-[1.02] transition-transform duration-500 ease-in-out">

@@ -62,10 +62,6 @@ const Navbar: React.FC = () => {
     } else {
       navigate(`/?category=${id}`);
     }
-
-    setTimeout(() => {
-      scrollToProjects();
-    }, 100);
   };
 
   const handleLogoClick = () => {
@@ -103,14 +99,14 @@ const Navbar: React.FC = () => {
                     className="nav-item flex flex-col items-center group relative outline-none cursor-pointer"
                   >
                     <span className={`text-[12px] tracking-[0.2em] uppercase transition-all duration-500 ${isActive
-                        ? 'font-bold text-slate-900'
-                        : 'text-slate-400 font-medium hover:text-slate-600'
+                      ? 'font-bold text-slate-900'
+                      : 'text-slate-400 font-medium hover:text-slate-600'
                       }`}>
                       {link.label}
                     </span>
                     <div className={`h-[2px] w-4 mt-2 transition-all duration-500 ease-out origin-center ${isActive
-                        ? 'bg-slate-900 scale-x-100 opacity-100'
-                        : 'bg-slate-400 scale-x-100 opacity-100 group-hover:bg-slate-600'
+                      ? 'bg-slate-900 scale-x-100 opacity-100'
+                      : 'bg-slate-400 scale-x-100 opacity-100 group-hover:bg-slate-600'
                       }`} />
                   </button>
                 </li>

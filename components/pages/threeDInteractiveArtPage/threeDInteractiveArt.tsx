@@ -39,7 +39,7 @@
 //       >
 //         {/* 디테일한 토러스 매듭 기하학 */}
 //         <torusKnotGeometry args={[0.5, 0.18, 128, 32]} />
-        
+
 //         {/* 파스텔톤 재질 설정 */}
 //         <meshPhysicalMaterial 
 //           color={hovered ? '#fda4af' : '#a5b4fc'} // 호버 시 로즈 핑크, 평소엔 연보라
@@ -109,8 +109,9 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../../BackButton';
 // 👇 components 폴더 안에 ThreeScene.tsx 파일이 꼭 있어야 합니다!
-import ThreeScene from './components/ThreeScene'; 
+import ThreeScene from './components/ThreeScene';
 
 const ThreeDInteractiveArt: React.FC = () => {
   const navigate = useNavigate();
@@ -122,17 +123,10 @@ const ThreeDInteractiveArt: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen pt-20 bg-gradient-to-br from-rose-50 via-white to-blue-50 text-slate-700 overflow-hidden flex flex-col">
-      
+
       {/* 🔙 뒤로가기 버튼 */}
-      <button 
-          onClick={() => navigate('/')}
-          className="fixed bottom-10 left-10 w-14 h-14 flex items-center justify-center rounded-full bg-white border border-slate-200 shadow-2xl z-[9999] text-slate-600 hover:text-black hover:scale-110 transition-all cursor-pointer"
-          aria-label="Back to home"
-      >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-      </button>
+      {/* 🔙 뒤로가기 버튼 */}
+      <BackButton />
 
       {/* 👇 [수정됨] mt-16 -> mt-40 으로 변경하여 텍스트를 훨씬 더 아래로 내렸습니다 */}
       <header className="absolute top-0 left-0 w-full p-8 mt-40 z-10 pointer-events-none">

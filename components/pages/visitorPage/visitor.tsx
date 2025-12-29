@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Note, NoteColor } from './visitorTypes';
 import StickyNote from './components/StickyNote';
 import NoteForm from './components/NoteForm';
+import BackButton from '../../BackButton';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -61,20 +62,8 @@ const App: React.FC = () => {
       {/* bg-stone-100 등 배경색을 살짝 넣어주면 메모가 더 잘 보입니다 (선택사항) */}
 
       {/* 뒤로가기 버튼 */}
-      <button
-        onClick={() => navigate('/')}
-        className="fixed bottom-10 left-10 z-[60] w-14 h-14 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-        aria-label="Back to home"
-      >
-        <svg
-          className="w-6 h-6 text-slate-600 group-hover:text-slate-900 transition-colors"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </button>
+      {/* 뒤로가기 버튼 */}
+      <BackButton />
 
       {/* Header UI */}
       <header className="fixed top-0 left-0 w-full p-10 flex flex-col items-center z-[150] pointer-events-none">

@@ -15,8 +15,12 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
   };
 
   return (
-    <Link 
+    <Link
       to={`/project/${website.id}`}
+      onClick={() => {
+        sessionStorage.setItem('restoreScroll', 'true');
+        sessionStorage.setItem('scrollPos', window.scrollY.toString());
+      }}
       className={`flex flex-col ${bgColors[website.category]} rounded-none overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group block border border-black/5`}
     >
       {/* Thumbnail */}
@@ -28,7 +32,7 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
       </div>
-      
+
       {/* Content */}
       <div className="px-9 pb-9 flex flex-col flex-grow">
         {/* 텍스트의 두께를 줄이고 자간을 넓혀 감성적이고 심플한 스타일로 변경했습니다. */}
@@ -38,12 +42,12 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
         <p className="text-slate-800 text-[13px] font-normal leading-relaxed mb-8 opacity-70">
           {website.description}
         </p>
-        
+
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-10">
           {website.tags.map((tag) => (
-            <span 
-              key={tag} 
+            <span
+              key={tag}
               className="px-3 py-1.5 bg-white/40 backdrop-blur-md border border-black/5 rounded-full text-slate-700 text-[10px] font-bold uppercase tracking-wider transition-colors hover:bg-white/80"
             >
               #{tag}
@@ -58,10 +62,10 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
               view project
               <div className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-slate-900 transition-all duration-300 group-hover:w-full" />
             </span>
-            <svg 
-              className="w-4 h-4 transform transition-transform group-hover:translate-x-1.5" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-4 h-4 transform transition-transform group-hover:translate-x-1.5"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />

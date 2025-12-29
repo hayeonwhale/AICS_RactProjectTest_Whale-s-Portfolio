@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HashRouter as Router, Routes, Route, useSearchParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import WebsiteCard from './components/WebsiteCard';
 import MovieCard from './components/pages/MovieCardPage/MovieCard';
@@ -186,11 +187,22 @@ const PortfolioContent: React.FC = () => {
             </h2>
             <div className="w-10 h-[2px] bg-slate-100 mx-auto"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-            {filteredWebsites.map((website) => (
-              <WebsiteCard key={website.id} website={website} />
-            ))}
-          </div>
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+            <AnimatePresence mode="popLayout">
+              {filteredWebsites.map((website) => (
+                <motion.div
+                  key={website.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <WebsiteCard website={website} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
           {filteredWebsites.length === 0 && (
             <div className="text-center py-32 text-slate-300 font-serif italic text-xl">
               Projects coming soon...
@@ -239,8 +251,20 @@ const ScrollToTop: React.FC = () => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // 2. 스크롤 맨 위로 이동
-    window.scrollTo(0, 0);
+
+    // 2. 스크롤 위치 복원 로직
+    const shouldRestore = sessionStorage.getItem('restoreScroll') === 'true';
+    const savedPos = sessionStorage.getItem('scrollPos');
+
+    if (location.pathname === '/' && shouldRestore && savedPos) {
+      window.scrollTo(0, parseInt(savedPos, 10));
+      // 복원 후에는 플래그를 지워줍니다. (다음 번엔 맨 위로 가도록)
+      sessionStorage.removeItem('restoreScroll');
+      sessionStorage.removeItem('scrollPos');
+    } else {
+      // 그 외의 경우 (로고 클릭, 새로고침 등) -> 무조건 맨 위로
+      window.scrollTo(0, 0);
+    }
   }, [location]);
 
   return null;

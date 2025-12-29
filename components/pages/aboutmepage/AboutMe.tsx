@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../../BackButton';
 
 // 👇 [핵심] 외부 파일에서 불러오지 않고, 여기서 직접 정의합니다. (import 문 없음!)
 interface Profile {
@@ -27,32 +28,32 @@ const MailIcon: React.FC<IconProps> = ({ size = 24, className, ...props }) => (
 );
 
 const BlogIcon: React.FC<IconProps> = ({ size = 24, className, ...props }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-        <path d="M12 20h9" />
-        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-    </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M12 20h9" />
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+  </svg>
 );
 
 const InstagramIcon: React.FC<IconProps> = ({ size = 24, className, ...props }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-    </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
 );
 
 const HeartBandageIcon: React.FC<IconProps> = ({ size = 24, className, ...props }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
-        <defs>
-            <pattern id="bandage-dots" x="0" y="0" width="1.5" height="1.5" patternUnits="userSpaceOnUse">
-                <circle cx="0.5" cy="0.5" r="0.2" fill="black" opacity="0.1" />
-            </pattern>
-        </defs>
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#bandage-dots)" />
-        <rect x="7" y="7" width="10" height="6" rx="1.5" fill="white" fillOpacity="0.6" />
-        <rect x="8" y="8" width="8" height="4" rx="1" fill="black" fillOpacity="0.07" />
-    </svg>
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} {...props}>
+    <defs>
+      <pattern id="bandage-dots" x="0" y="0" width="1.5" height="1.5" patternUnits="userSpaceOnUse">
+        <circle cx="0.5" cy="0.5" r="0.2" fill="black" opacity="0.1" />
+      </pattern>
+    </defs>
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#bandage-dots)" />
+    <rect x="7" y="7" width="10" height="6" rx="1.5" fill="white" fillOpacity="0.6" />
+    <rect x="8" y="8" width="8" height="4" rx="1" fill="black" fillOpacity="0.07" />
+  </svg>
 );
 
 // --- UI Components ---
@@ -88,11 +89,11 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${className || ''}`;
 
   if (asChild && React.isValidElement(children)) {
-     const childProps = children.props as any;
-     return React.cloneElement(children, {
-       ...childProps,
-       className: `${combinedClasses} ${childProps.className || ''}`,
-     });
+    const childProps = children.props as any;
+    return React.cloneElement(children, {
+      ...childProps,
+      className: `${combinedClasses} ${childProps.className || ''}`,
+    });
   }
   return <button className={combinedClasses} {...props}>{children}</button>;
 };
@@ -114,23 +115,15 @@ const IntroCard: React.FC<{ profile?: Profile }> = ({ profile = defaultProfile }
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="min-h-screen w-full flex items-center justify-center relative px-4 pt-24 bg-slate-50">
       {/* 🔙 뒤로가기 버튼 (좌측 하단 배치) */}
-      <button 
-          onClick={() => navigate('/')}
-          className="fixed bottom-10 left-10 w-14 h-14 flex items-center justify-center rounded-full bg-white border border-slate-200 shadow-2xl z-[9999] text-slate-600 hover:text-black hover:scale-110 transition-all cursor-pointer"
-          aria-label="Back to home"
-      >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-      </button>
+      <BackButton />
 
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="max-w-sm mx-auto w-full mt-32"
+        className="max-w-sm w-full"
       >
         <Card className="rounded-2xl shadow-lg overflow-hidden">
           <div className="bg-gradient-to-br from-white to-slate-50 p-6">
@@ -188,7 +181,7 @@ const IntroCard: React.FC<{ profile?: Profile }> = ({ profile = defaultProfile }
           </div>
         </Card>
       </motion.div>
-    </>
+    </div>
   );
 }
 

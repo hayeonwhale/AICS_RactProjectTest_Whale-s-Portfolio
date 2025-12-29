@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 👈 추가됨
+import BackButton from '../../BackButton';
 import PosterCanvas from './components/PosterCanvas';
 import { PosterData } from './Ptypes';
 
@@ -27,28 +28,16 @@ const App: React.FC = () => {
   return (
     // pt-32 pb-20 으로 변경하여 위쪽 여백을 크게 늘렸습니다.
     <div className="min-h-screen bg-stone-100 font-sans text-ink pt-32 pb-20 px-4 flex justify-center relative">
-      
+
       {/* 🔙 뒤로가기 버튼 */}
-      <button 
-        onClick={() => navigate('/')}
-        className="fixed top-6 left-6 z-[9999] w-12 h-12 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 group"
-        aria-label="Back to home"
-      >
-        <svg 
-          className="w-5 h-5 text-slate-600 group-hover:text-slate-900 transition-colors" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </button>
+      {/* 🔙 뒤로가기 버튼 */}
+      <BackButton />
 
       {/* Background Texture/Gradient */}
       <div className="fixed inset-0 bg-[#e8e6e1] opacity-50 pointer-events-none" />
-        
+
       <div className="relative w-full max-w-5xl z-10">
-          <PosterCanvas data={posterData} />
+        <PosterCanvas data={posterData} />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../BackButton';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
@@ -97,7 +98,7 @@ class VoxelJellyfish {
       const startX = Math.cos(angle) * r;
       const startZ = Math.sin(angle) * r;
       const numSegments = tentacleLength + Math.floor(Math.random() * 5);
-      
+
       const tentacleMesh = new THREE.InstancedMesh(segGeo, segMat, numSegments);
       tentacleMesh.userData = {
         startX, startZ, segments: numSegments,
@@ -123,7 +124,7 @@ class VoxelJellyfish {
 
   update(time: number) {
     const t = time + this.timeOffset;
-    
+
     // 몸통 움직임
     this.mesh.position.y += Math.sin(t * 1.5) * 0.02;
     this.mesh.rotation.z = Math.sin(t * 0.5) * 0.05;
@@ -136,7 +137,7 @@ class VoxelJellyfish {
       for (let i = 0; i < data.segments; i++) {
         const wave = Math.sin(t * 2 - (i * 0.3) + data.noiseOffset);
         const wave2 = Math.cos(t * 1.5 - (i * 0.3) + data.noiseOffset);
-        
+
         const x = data.startX + (wave * i * 0.05);
         const z = data.startZ + (wave2 * i * 0.05);
         const y = -(i * VOXEL_SIZE);
@@ -174,9 +175,9 @@ const VoxelJellyfishScene: React.FC = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ReinhardToneMapping;
-    
+
     // DOM에 캔버스 추가 (중요: 기존 것 싹 비우고 추가)
-    mountRef.current.innerHTML = ''; 
+    mountRef.current.innerHTML = '';
     mountRef.current.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -204,19 +205,19 @@ const VoxelJellyfishScene: React.FC = () => {
     const floorGeo = new THREE.BoxGeometry(VOXEL_SIZE, VOXEL_SIZE, VOXEL_SIZE);
     const floorMat = new THREE.MeshStandardMaterial({ color: PALETTE.sand, roughness: 0.9 });
     const floorMesh = new THREE.InstancedMesh(floorGeo, floorMat, floorSize * floorSize);
-    
+
     let idx = 0;
     const dummy = new THREE.Object3D();
-    for(let x = -floorSize/2; x < floorSize/2; x++) {
-        for(let z = -floorSize/2; z < floorSize/2; z++) {
-            const h = Math.sin(x*0.1)*Math.cos(z*0.1)*2 + Math.sin(x*0.3+z*0.2);
-            dummy.position.set(x*VOXEL_SIZE*1.5, -12+(h*VOXEL_SIZE), z*VOXEL_SIZE*1.5);
-            dummy.rotation.set(Math.random()*0.1, Math.random()*0.1, Math.random()*0.1);
-            floorMesh.setColorAt(idx, new THREE.Color(PALETTE.sand).multiplyScalar(0.5+Math.random()*0.5));
-            dummy.updateMatrix();
-            floorMesh.setMatrixAt(idx, dummy.matrix);
-            idx++;
-        }
+    for (let x = -floorSize / 2; x < floorSize / 2; x++) {
+      for (let z = -floorSize / 2; z < floorSize / 2; z++) {
+        const h = Math.sin(x * 0.1) * Math.cos(z * 0.1) * 2 + Math.sin(x * 0.3 + z * 0.2);
+        dummy.position.set(x * VOXEL_SIZE * 1.5, -12 + (h * VOXEL_SIZE), z * VOXEL_SIZE * 1.5);
+        dummy.rotation.set(Math.random() * 0.1, Math.random() * 0.1, Math.random() * 0.1);
+        floorMesh.setColorAt(idx, new THREE.Color(PALETTE.sand).multiplyScalar(0.5 + Math.random() * 0.5));
+        dummy.updateMatrix();
+        floorMesh.setMatrixAt(idx, dummy.matrix);
+        idx++;
+      }
     }
     floorMesh.receiveShadow = true;
     scene.add(floorMesh);
@@ -224,19 +225,19 @@ const VoxelJellyfishScene: React.FC = () => {
     // Particles
     const pGeo = new THREE.BufferGeometry();
     const pPos = [];
-    for(let i=0; i<1000; i++) pPos.push((Math.random()-0.5)*40, (Math.random()-0.5)*30, (Math.random()-0.5)*40);
+    for (let i = 0; i < 1000; i++) pPos.push((Math.random() - 0.5) * 40, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 40);
     pGeo.setAttribute('position', new THREE.Float32BufferAttribute(pPos, 3));
     const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x00ffff, size: 0.1, transparent: true, opacity: 0.6 }));
     scene.add(particles);
 
     // Jellyfish Group
     const jellies: VoxelJellyfish[] = [];
-    const addJelly = (x:number, y:number, z:number, r:number, len:number, s:number) => {
-        const j = new VoxelJellyfish(r, len);
-        j.mesh.position.set(x, y, z);
-        j.mesh.scale.set(s, s, s);
-        scene.add(j.mesh);
-        jellies.push(j);
+    const addJelly = (x: number, y: number, z: number, r: number, len: number, s: number) => {
+      const j = new VoxelJellyfish(r, len);
+      j.mesh.position.set(x, y, z);
+      j.mesh.scale.set(s, s, s);
+      scene.add(j.mesh);
+      jellies.push(j);
     };
 
     addJelly(4, 2, 2, 7, 25, 1);
@@ -251,12 +252,12 @@ const VoxelJellyfishScene: React.FC = () => {
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      
+
       const time = clock.getElapsedTime();
 
       // 업데이트 실행 (여기서 움직임 발생!)
       jellies.forEach(j => j.update(time));
-      
+
       particles.rotation.y = time * 0.02;
       particles.position.y = Math.sin(time * 0.2) * 0.5;
 
@@ -278,7 +279,7 @@ const VoxelJellyfishScene: React.FC = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
-      if(mountRef.current) mountRef.current.innerHTML = ''; // 깔끔하게 비우기
+      if (mountRef.current) mountRef.current.innerHTML = ''; // 깔끔하게 비우기
       renderer.dispose();
       composer.dispose();
     };
@@ -287,20 +288,8 @@ const VoxelJellyfishScene: React.FC = () => {
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: '#000510' }}>
       {/* 뒤로가기 버튼 */}
-      <button 
-        onClick={() => navigate('/')}
-        className="fixed bottom-10 left-10 z-[60] w-14 h-14 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-        aria-label="Back to home"
-      >
-        <svg 
-          className="w-6 h-6 text-slate-600 group-hover:text-slate-900 transition-colors" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </button>
+      {/* 뒤로가기 버튼 */}
+      <BackButton />
       <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
     </div>
   );

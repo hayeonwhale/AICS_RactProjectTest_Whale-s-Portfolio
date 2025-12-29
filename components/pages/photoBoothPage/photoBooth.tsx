@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../../BackButton';
 import { Download, Heart, Cloud, Trash2, CameraIcon, ImageIcon, CheckCircle2, X } from 'lucide-react';
 
 // --- Types ---
@@ -57,7 +58,7 @@ const App: React.FC = () => {
   const [caption, setCaption] = useState<string>('');
   const [stickers, setStickers] = useState<StickerInstance[]>([]);
   const [draggingId, setDraggingId] = useState<string | null>(null);
-  
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -65,8 +66,8 @@ const App: React.FC = () => {
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { aspectRatio: 3/4, facingMode: 'user' } 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { aspectRatio: 3 / 4, facingMode: 'user' }
       });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -86,17 +87,17 @@ const App: React.FC = () => {
 
   const takeCapture = useCallback(() => {
     if (!videoRef.current || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const video = videoRef.current;
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext('2d');
-    
+
     if (ctx) {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      
+
       setCapturedPhotos(prev => {
         const newList = [...prev, { id: Date.now().toString() + Math.random(), dataUrl }];
         if (newList.length >= 6) {
@@ -216,7 +217,7 @@ const App: React.FC = () => {
       'bg-[#FDF2F8]': '#FDF2F8',
       'bg-[#F1F5F9]': '#F1F5F9',
     };
-    
+
     ctx.fillStyle = bgColorMap[selectedFrame.class] || '#FFFFFF';
     ctx.fillRect(0, 0, stripWidth, stripHeight);
 
@@ -238,7 +239,7 @@ const App: React.FC = () => {
       ctx.font = '32px "Dancing Script", cursive';
       ctx.textAlign = 'center';
       ctx.fillText(caption, stripWidth / 2, stripHeight - 75);
-      
+
       ctx.font = '14px "Quicksand"';
       ctx.letterSpacing = '2px';
       ctx.fillText(new Date().toLocaleDateString('en-US').toUpperCase(), stripWidth / 2, stripHeight - 40);
@@ -263,20 +264,8 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
       {/* 뒤로가기 버튼 */}
-      <button 
-        onClick={() => navigate('/')}
-        className="fixed bottom-10 left-10 z-[60] w-14 h-14 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-        aria-label="Back to home"
-      >
-        <svg 
-          className="w-6 h-6 text-slate-600 group-hover:text-slate-900 transition-colors" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </button>
+      {/* 뒤로가기 버튼 */}
+      <BackButton />
       <header className="mb-10 text-center">
         <div className="flex items-center justify-center gap-3 mb-2">
           <Cloud className="text-sky-200 w-10 h-10 fill-sky-50" />
@@ -289,7 +278,7 @@ const App: React.FC = () => {
       </header>
 
       <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        
+
         {/* Left Section: Camera or Selection */}
         <section className="flex flex-col gap-8">
           {state === 'SELECTING' ? (
@@ -372,7 +361,7 @@ const App: React.FC = () => {
                     />
                   ))}
                 </div>
-                
+
                 <button
                   onClick={startSession}
                   disabled={state !== 'IDLE'}
@@ -411,7 +400,7 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div 
+          <div
             ref={stripRef}
             onMouseMove={handleMouseMove}
             onTouchMove={handleTouchMove}
@@ -429,7 +418,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
                 ))}
-                
+
                 <div className="mt-8 text-center px-6 w-full pb-6">
                   <p className={`font-handwriting text-[2.1rem] leading-none mb-4 ${selectedFrame.text}`}>
                     {caption}
