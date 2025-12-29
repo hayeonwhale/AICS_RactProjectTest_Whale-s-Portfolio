@@ -76,7 +76,7 @@ const myWebsites: Website[] = [
     id: 7,
     title: 'Photo Booth',
     description: 'A playful photo booth web application where users can take 4-cut pictures and save them.',
-    imageUrl: 'https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/3kT/image/N20qL4EX5gsJEEh-U-iGLbcmyeI.jpg',
+    imageUrl: 'https://i.pinimg.com/1200x/ce/a6/43/cea643982aa0c972bed9be496ebc58fd.jpg',
     url: '/PhotoBooth',
     tags: ['Photo Booth', 'Web Application', 'Entertainment', 'Decorative'],
     category: 'playground'

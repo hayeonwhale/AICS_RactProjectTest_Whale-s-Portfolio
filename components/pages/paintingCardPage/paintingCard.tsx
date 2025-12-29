@@ -26,17 +26,16 @@ const App: React.FC = () => {
   const [posterData] = useState<PosterData>(DEFAULT_POSTER);
 
   return (
-    // pt-32 pb-20 으로 변경하여 위쪽 여백을 크게 늘렸습니다.
-    <div className="min-h-screen bg-stone-100 font-sans text-ink pt-32 pb-20 px-4 flex justify-center relative">
+    // flex layout for centering
+    <div className="h-screen w-full flex justify-center relative px-4 pt-24 bg-stone-100 font-sans text-ink overflow-hidden">
 
-      {/* 🔙 뒤로가기 버튼 */}
       {/* 🔙 뒤로가기 버튼 */}
       <BackButton />
 
       {/* Background Texture/Gradient */}
       <div className="fixed inset-0 bg-[#e8e6e1] opacity-50 pointer-events-none" />
 
-      <div className="relative w-full max-w-5xl z-10">
+      <div className="relative w-full max-w-5xl z-10 h-full">
         <PosterCanvas data={posterData} />
       </div>
     </div>

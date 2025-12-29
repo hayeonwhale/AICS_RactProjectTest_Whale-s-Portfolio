@@ -6,7 +6,7 @@ const BackButton: React.FC = () => {
 
     return (
         <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(-1)}
             className="fixed bottom-10 left-10 w-14 h-14 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md border border-slate-200 shadow-2xl z-[9999] text-slate-600 hover:text-black hover:scale-110 transition-all duration-300 cursor-pointer group"
             aria-label="Back to home"
         >

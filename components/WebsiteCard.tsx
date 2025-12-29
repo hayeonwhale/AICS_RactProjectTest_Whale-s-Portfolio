@@ -21,10 +21,10 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
         sessionStorage.setItem('restoreScroll', 'true');
         sessionStorage.setItem('scrollPos', window.scrollY.toString());
       }}
-      className={`flex flex-col ${bgColors[website.category]} rounded-none overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group block border border-black/5`}
+      className={`flex flex-col h-full ${bgColors[website.category]} rounded-none overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 group block border border-black/5`}
     >
       {/* Thumbnail */}
-      <div className="relative aspect-[16/10] overflow-hidden m-5 rounded-none">
+      <div className="relative aspect-[16/10] overflow-hidden m-5 rounded-none shrink-0">
         <img
           src={website.imageUrl}
           alt={website.title}
@@ -36,10 +36,10 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ website }) => {
       {/* Content */}
       <div className="px-9 pb-9 flex flex-col flex-grow">
         {/* 텍스트의 두께를 줄이고 자간을 넓혀 감성적이고 심플한 스타일로 변경했습니다. */}
-        <h3 className="text-[22px] font-serif font-normal text-slate-700 mb-3 tracking-wide leading-relaxed">
+        <h3 className="text-[22px] font-serif font-normal text-slate-700 mb-3 tracking-wide leading-relaxed line-clamp-2">
           {website.title}
         </h3>
-        <p className="text-slate-800 text-[13px] font-normal leading-relaxed mb-8 opacity-70">
+        <p className="text-slate-800 text-[13px] font-normal leading-relaxed mb-8 opacity-70 line-clamp-3">
           {website.description}
         </p>
 

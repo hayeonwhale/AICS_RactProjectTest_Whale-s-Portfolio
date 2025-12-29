@@ -1,6 +1,6 @@
 import React from 'react';
 import { PosterData } from '../Ptypes';
-import { Quote, Sparkles } from 'lucide-react';
+import { Quote } from 'lucide-react';
 
 interface PosterCanvasProps {
   data: PosterData;
@@ -11,18 +11,17 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({ data, scale = 1 }) => {
   const { imageUrl, content } = data;
 
   return (
-    <div 
-      className="bg-paper shadow-2xl relative overflow-hidden flex flex-col md:flex-row w-full max-w-5xl mx-auto transition-all duration-500"
-      style={{ 
-        minHeight: '800px',
+    <div
+      className="bg-paper shadow-2xl relative overflow-hidden flex flex-col md:flex-row w-full max-w-5xl mx-auto transition-all duration-500 h-full"
+      style={{
         transform: `scale(${scale})`,
         transformOrigin: 'top center'
       }}
     >
       {/* Visual Section */}
       <div className="w-full md:w-1/2 relative h-[400px] md:h-auto bg-stone-200">
-         <img 
-          src={imageUrl} 
+        <img
+          src={imageUrl}
           alt={content.title}
           className="w-full h-full object-cover"
         />
@@ -33,11 +32,8 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({ data, scale = 1 }) => {
       </div>
 
       {/* Text Section */}
-      <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between bg-white relative">
-        {/* Decorative Elements */}
-        <div className="absolute top-6 right-8 text-secondary/20">
-          <Sparkles size={64} strokeWidth={1} />
-        </div>
+      <div className="w-full md:w-1/2 p-8 md:pt-12 md:px-12 md:pb-6 flex flex-col justify-between bg-white relative">
+
 
         <div>
           {/* Intro */}
@@ -62,10 +58,10 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({ data, scale = 1 }) => {
 
           {/* Connection */}
           <div className="mb-10">
-             <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-stone-400 mb-2">두 주제의 연결</h3>
-             <p className="text-stone-700 font-serif leading-relaxed break-keep">
+            <h3 className="text-xs font-sans font-bold uppercase tracking-widest text-stone-400 mb-2">두 주제의 연결</h3>
+            <p className="text-stone-700 font-serif leading-relaxed break-keep">
               {content.connection}
-             </p>
+            </p>
           </div>
         </div>
 
@@ -77,14 +73,8 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({ data, scale = 1 }) => {
               {content.coreMessage}
             </p>
           </div>
-          
-          <div className="flex gap-2 mt-6 flex-wrap">
-            {content.tags.map((tag, idx) => (
-              <span key={idx} className="text-[10px] uppercase tracking-widest border border-stone-200 px-2 py-1 text-stone-400 rounded-full">
-                #{tag}
-              </span>
-            ))}
-          </div>
+
+
         </div>
       </div>
     </div>

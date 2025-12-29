@@ -16,31 +16,10 @@ const Navbar: React.FC = () => {
 
   const activeId = getActiveId();
 
-  // [수정된 부분] 페이지 로드(새로고침) 시 무조건 'View All'로 초기화
-  useEffect(() => {
-    // 현재 URL에 쿼리 파라미터(category 등)가 있다면 제거하고 메인으로 이동
-    if (location.search) {
-      navigate('/', { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // 의존성 배열을 비워 마운트 시 1회만 실행
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
 
-  // 스크롤 감지 로직
-  useEffect(() => {
-    // 1. 현재 주소가 메인('/')이 아니거나, 뒤에 이상한 검색어(?category=..)가 붙어있으면?
-    if (location.pathname !== '/' || location.search) {
 
-      // 2. 강제로 메인 화면('/')으로 이동시킵니다.
-      navigate('/', { replace: true });
-
-      // 3. 스크롤도 맨 위로 올립니다.
-      window.scrollTo(0, 0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // [] 빈 배열이므로 새로고침(또는 처음 접속) 시 딱 한 번만 실행됨!
+  // 스크롤 감지 및 프로젝트 섹션 이동 로직
+  // (이전 로직은 새로고침 시 강제로 홈으로 보내는 문제가 있어 제거함)
 
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
@@ -62,9 +41,17 @@ const Navbar: React.FC = () => {
     } else {
       navigate(`/?category=${id}`);
     }
+
+    // 네비게이션 후 프로젝트 섹션으로 스크롤 이동
+    setTimeout(() => {
+      scrollToProjects();
+    }, 100);
   };
 
   const handleLogoClick = () => {
+    // 로고 클릭 시 스크롤 복원 플래그 제거 (무조건 맨 위로 가야 함)
+    sessionStorage.removeItem('restoreScroll');
+    sessionStorage.removeItem('scrollPos');
     navigate('/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
