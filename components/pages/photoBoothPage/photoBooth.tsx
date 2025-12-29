@@ -20,18 +20,85 @@ interface StickerInstance {
 }
 
 const FRAME_COLORS = [
+  // Solid Colors
   { name: 'Pure White', class: 'bg-white', text: 'text-gray-500' },
   { name: 'Cloud White', class: 'bg-[#F8FAFC]', text: 'text-slate-400' },
+  { name: 'Modern Dark', class: 'bg-[#333333]', text: 'text-white' },
   { name: 'Soft Mint', class: 'bg-[#F0FDF4]', text: 'text-emerald-400' },
   { name: 'Lavender', class: 'bg-[#F5F3FF]', text: 'text-violet-400' },
   { name: 'Peach', class: 'bg-[#FFF7ED]', text: 'text-orange-300' },
   { name: 'Sky Blue', class: 'bg-[#F0F9FF]', text: 'text-sky-400' },
-  { name: 'Rose Petal', class: 'bg-[#FFF1F2]', text: 'text-rose-300' },
-  { name: 'Lemon', class: 'bg-[#FEFCE8]', text: 'text-yellow-400' },
-  { name: 'Matcha', class: 'bg-[#F7FEE7]', text: 'text-lime-400' },
-  { name: 'Dreamy Ink', class: 'bg-[#1E293B]', text: 'text-slate-400' },
-  { name: 'Blush', class: 'bg-[#FDF2F8]', text: 'text-pink-300' },
-  { name: 'Soft Sage', class: 'bg-[#F1F5F9]', text: 'text-slate-400' },
+  { name: 'Pink', class: 'bg-[#FFF1F2]', text: 'text-rose-300' },
+
+  // Gradients
+  { name: 'Sunset', class: 'bg-gradient-to-br from-orange-100 to-rose-200', text: 'text-rose-500' },
+  { name: 'Ocean', class: 'bg-gradient-to-br from-cyan-100 to-blue-200', text: 'text-blue-500' },
+  { name: 'Aurora', class: 'bg-gradient-to-br from-green-100 via-teal-100 to-emerald-200', text: 'text-teal-600' },
+  { name: 'Berry', class: 'bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-200', text: 'text-purple-500' },
+  { name: 'Cotton Candy', class: 'bg-gradient-to-tr from-pink-300 via-purple-300 to-indigo-400', text: 'text-white' },
+
+  // Patterns
+  {
+    name: 'Polka Dots',
+    class: 'bg-[#fff]',
+    text: 'text-slate-400',
+    style: {
+      backgroundImage: 'radial-gradient(#cbd5e1 2px, transparent 2px)',
+      backgroundSize: '20px 20px',
+      backgroundColor: '#f8fafc'
+    }
+  },
+  {
+    name: 'Grid',
+    class: 'bg-[#fff]',
+    text: 'text-indigo-400',
+    style: {
+      backgroundImage: 'linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px)',
+      backgroundSize: '20px 20px',
+      backgroundColor: '#ffffff'
+    }
+  },
+  {
+    name: 'Checkers',
+    class: 'bg-[#fff]',
+    text: 'text-pink-400',
+    style: {
+      backgroundImage: 'conic-gradient(#fce7f3 90deg, transparent 90deg, transparent 180deg, #fce7f3 180deg, #fce7f3 270deg, transparent 270deg)',
+      backgroundSize: '40px 40px',
+      backgroundColor: '#fff1f2'
+    }
+  },
+  {
+    name: 'Dark Checkers',
+    class: 'bg-[#111]',
+    text: 'text-white',
+    style: {
+      backgroundImage: 'conic-gradient(#111 90deg, #333 90deg, #333 180deg, #111 180deg, #111 270deg, #333 270deg)',
+      backgroundSize: '40px 40px',
+      backgroundColor: '#111'
+    }
+  },
+  {
+    name: 'Midnight',
+    class: 'bg-[#0f172a]',
+    text: 'text-yellow-200',
+    style: {
+      backgroundImage: 'radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px)',
+      backgroundSize: '50px 50px, 25px 25px',
+      backgroundPosition: '0 0, 25px 25px',
+      backgroundColor: '#0f172a'
+    }
+  },
+  {
+    name: 'Love',
+    class: 'bg-[#fff1f2]',
+    text: 'text-rose-500',
+    style: {
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23fb7185' fill-opacity='0.4'/%3E%3C/svg%3E")`,
+      backgroundSize: '40px 40px',
+      backgroundColor: '#fff1f2'
+    }
+  },
 ];
 
 const STICKERS = ['☁️', '🌸', '🦋', '✨', '❤️', '🌟', '🎀', '🧸', '🍦', '🍭', '🍓', '🍰', '🌈', '🍀', '🐶', '🐱'];
@@ -262,19 +329,12 @@ const App: React.FC = () => {
   const finalPhotos = selectedPhotoIds.map(id => capturedPhotos.find(p => p.id === id)!);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 pt-48">
       {/* 뒤로가기 버튼 */}
       {/* 뒤로가기 버튼 */}
       <BackButton />
-      <header className="mb-10 text-center">
-        <div className="flex items-center justify-center gap-3 mb-2">
-          <Cloud className="text-sky-200 w-10 h-10 fill-sky-50" />
-          <h1 className="text-4xl font-bold tracking-tight pastel-text-gradient">
-            Pastel Memories
-          </h1>
-          <Cloud className="text-pink-200 w-8 h-8 fill-pink-50" />
-        </div>
-        <p className="text-slate-400 text-sm font-medium tracking-widest uppercase">Your moments, softly captured</p>
+      <header className="mb-4 text-center">
+        {/* Header text removed as requested, keeping space */}
       </header>
 
       <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -347,6 +407,15 @@ const App: React.FC = () => {
                 )}
               </div>
 
+              <button
+                onClick={startSession}
+                disabled={state !== 'IDLE'}
+                className={`w-full py-5 rounded-full font-bold text-white transition-all shadow-xl flex items-center justify-center gap-4 text-xl ${state === 'IDLE' ? 'bg-sky-300 hover:bg-sky-400 hover:-translate-y-1 active:translate-y-0 active:shadow-md' : 'bg-slate-100 cursor-not-allowed text-slate-300'}`}
+              >
+                <CameraIcon className="w-7 h-7" />
+                Take 6 Shots
+              </button>
+
               <div className="bg-white/80 backdrop-blur p-8 rounded-[40px] soft-shadow flex flex-col gap-6 border border-white">
                 <div className="flex justify-between items-center">
                   <p className="text-xs font-bold text-slate-300 uppercase tracking-widest">Frame Settings</p>
@@ -357,19 +426,11 @@ const App: React.FC = () => {
                     <button
                       key={frame.name}
                       onClick={() => setSelectedFrame(frame)}
+                      style={frame.style}
                       className={`w-full aspect-square rounded-2xl border-2 transition-all hover:scale-110 active:scale-95 ${frame.class} ${selectedFrame.name === frame.name ? 'border-sky-300 ring-4 ring-sky-50' : 'border-slate-50'}`}
                     />
                   ))}
                 </div>
-
-                <button
-                  onClick={startSession}
-                  disabled={state !== 'IDLE'}
-                  className={`mt-4 w-full py-5 rounded-full font-bold text-white transition-all shadow-xl flex items-center justify-center gap-4 text-xl ${state === 'IDLE' ? 'bg-sky-300 hover:bg-sky-400 hover:-translate-y-1 active:translate-y-0 active:shadow-md' : 'bg-slate-100 cursor-not-allowed text-slate-300'}`}
-                >
-                  <CameraIcon className="w-7 h-7" />
-                  Take 6 Shots
-                </button>
               </div>
             </>
           )}
@@ -406,6 +467,7 @@ const App: React.FC = () => {
             onTouchMove={handleTouchMove}
             onMouseUp={() => setDraggingId(null)}
             onTouchEnd={() => setDraggingId(null)}
+            style={selectedFrame.style}
             className={`w-[320px] min-h-[980px] p-5 transition-all duration-700 soft-shadow rounded-sm ${selectedFrame.class} flex flex-col gap-4 items-center relative overflow-hidden select-none border-white/20`}
           >
             {state === 'REVIEW' && finalPhotos.length === 4 ? (
@@ -465,7 +527,7 @@ const App: React.FC = () => {
             )}
           </div>
         </section>
-      </main>
+      </main >
 
       <canvas ref={canvasRef} className="hidden" />
 
@@ -477,7 +539,7 @@ const App: React.FC = () => {
         </div>
         Softly made for your beautiful moments
       </footer>
-    </div>
+    </div >
   );
 };
 

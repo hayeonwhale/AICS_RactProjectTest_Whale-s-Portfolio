@@ -58,10 +58,9 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-stone-100">
+    <div className="relative w-full min-h-screen bg-stone-100 flex flex-col overflow-x-hidden">
       {/* bg-stone-100 등 배경색을 살짝 넣어주면 메모가 더 잘 보입니다 (선택사항) */}
 
-      {/* 뒤로가기 버튼 */}
       {/* 뒤로가기 버튼 */}
       <BackButton />
 
@@ -74,7 +73,7 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Board Container */}
-      <main className="w-full h-full relative z-10 pt-24">
+      <main className="w-full flex-grow relative z-10 pt-24 min-h-[50vh]">
         {notes.length === 0 && (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400 pointer-events-none">
             <p className="font-serif italic tracking-widest opacity-40">Fill the space...</p>
