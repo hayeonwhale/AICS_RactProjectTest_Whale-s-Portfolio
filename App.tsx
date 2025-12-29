@@ -235,6 +235,11 @@ const ScrollToTop: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
+    // 1. 브라우저의 자동 스크롤 복원 기능 끄기 (새로고침 시 맨 위로 가기 위해)
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    // 2. 스크롤 맨 위로 이동
     window.scrollTo(0, 0);
   }, [location]);
 

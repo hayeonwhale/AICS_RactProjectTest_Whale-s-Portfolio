@@ -32,10 +32,10 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     // 1. 현재 주소가 메인('/')이 아니거나, 뒤에 이상한 검색어(?category=..)가 붙어있으면?
     if (location.pathname !== '/' || location.search) {
-      
+
       // 2. 강제로 메인 화면('/')으로 이동시킵니다.
       navigate('/', { replace: true });
-      
+
       // 3. 스크롤도 맨 위로 올립니다.
       window.scrollTo(0, 0);
     }
@@ -68,6 +68,11 @@ const Navbar: React.FC = () => {
     }, 100);
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const navLinks = [
     { id: 'all', label: 'View All' },
     { id: 'visual', label: 'Visual Design' },
@@ -76,12 +81,11 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-      isScrolled ? 'bg-[#f0f6f9] shadow-sm py-4' : 'bg-[#dde9ef] py-8'
-    }`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${isScrolled ? 'bg-[#f0f6f9] shadow-sm py-4' : 'bg-[#dde9ef] py-8'
+      }`}>
       <div className="container mx-auto px-10 flex items-center justify-between">
-        <div 
-          onClick={() => handleNavClick('all')}
+        <div
+          onClick={handleLogoClick}
           className={`text-2xl font-serif tracking-tighter transition-all duration-500 cursor-pointer hover:scale-[1.02] active:scale-95 text-slate-900`}
         >
           Whale's Portfolio
@@ -91,25 +95,23 @@ const Navbar: React.FC = () => {
           <ul className="flex items-center gap-12">
             {navLinks.map((link) => {
               const isActive = activeId === link.id;
-              
+
               return (
                 <li key={link.id}>
                   <button
                     onClick={() => handleNavClick(link.id)}
                     className="nav-item flex flex-col items-center group relative outline-none cursor-pointer"
                   >
-                    <span className={`text-[12px] tracking-[0.2em] uppercase transition-all duration-500 ${
-                      isActive 
-                        ? 'font-bold text-slate-900' 
+                    <span className={`text-[12px] tracking-[0.2em] uppercase transition-all duration-500 ${isActive
+                        ? 'font-bold text-slate-900'
                         : 'text-slate-400 font-medium hover:text-slate-600'
-                    }`}>
+                      }`}>
                       {link.label}
                     </span>
-                    <div className={`h-[2px] w-4 mt-2 transition-all duration-500 ease-out origin-center ${
-                      isActive 
-                        ? 'bg-slate-900 scale-x-100 opacity-100' 
+                    <div className={`h-[2px] w-4 mt-2 transition-all duration-500 ease-out origin-center ${isActive
+                        ? 'bg-slate-900 scale-x-100 opacity-100'
                         : 'bg-slate-400 scale-x-100 opacity-100 group-hover:bg-slate-600'
-                    }`} />
+                      }`} />
                   </button>
                 </li>
               );
