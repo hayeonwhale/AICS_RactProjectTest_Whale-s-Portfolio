@@ -21,7 +21,6 @@ interface StickerInstance {
 
 const FRAME_COLORS = [
   // Solid Colors
-  { name: 'Pure White', class: 'bg-white', text: 'text-gray-500' },
   { name: 'Cloud White', class: 'bg-[#F8FAFC]', text: 'text-slate-400' },
   { name: 'Modern Dark', class: 'bg-[#333333]', text: 'text-white' },
   { name: 'Soft Mint', class: 'bg-[#F0FDF4]', text: 'text-emerald-400' },
@@ -65,7 +64,7 @@ const FRAME_COLORS = [
     style: {
       backgroundImage: 'conic-gradient(#fce7f3 90deg, transparent 90deg, transparent 180deg, #fce7f3 180deg, #fce7f3 270deg, transparent 270deg)',
       backgroundSize: '40px 40px',
-      backgroundColor: '#fff1f2'
+      backgroundColor: '#ffffffff'
     }
   },
   {
@@ -73,7 +72,7 @@ const FRAME_COLORS = [
     class: 'bg-[#111]',
     text: 'text-white',
     style: {
-      backgroundImage: 'conic-gradient(#111 90deg, #333 90deg, #333 180deg, #111 180deg, #111 270deg, #333 270deg)',
+      backgroundImage: 'conic-gradient(#111 90deg, #6c6c6c 90deg, #6c6c6c 180deg, #111 180deg, #111 270deg, #6c6c6c 270deg)',
       backgroundSize: '40px 40px',
       backgroundColor: '#111'
     }
@@ -101,7 +100,7 @@ const FRAME_COLORS = [
   },
 ];
 
-const STICKERS = ['☁️', '🌸', '🦋', '✨', '❤️', '🌟', '🎀', '🧸', '🍦', '🍭', '🍓', '🍰', '🌈', '🍀', '🐶', '🐱'];
+const STICKERS = ['☁️', '🌸', '🦋', '✨', '❤️', '💧', '🎀', '🧸', '🌀', '🍭', '🍓', '🍒', '🥨', '🐰', '🍀', '🐶', '🐱', '🐻', '⭐️', '🩵', '🩷', '🫧', '🩹'];
 
 const PRESET_CAPTIONS = [
   "A beautiful day to remember",
@@ -329,15 +328,15 @@ const App: React.FC = () => {
   const finalPhotos = selectedPhotoIds.map(id => capturedPhotos.find(p => p.id === id)!);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 pt-48">
+    <div className="min-h-screen flex flex-col items-center p-4 md:p-8 pt-32">
       {/* 뒤로가기 버튼 */}
-      {/* 뒤로가기 버튼 */}
+
       <BackButton />
       <header className="mb-4 text-center">
         {/* Header text removed as requested, keeping space */}
       </header>
 
-      <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mt-20">
 
         {/* Left Section: Camera or Selection */}
         <section className="flex flex-col gap-8">
