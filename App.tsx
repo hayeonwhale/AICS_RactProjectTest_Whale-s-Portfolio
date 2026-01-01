@@ -12,6 +12,7 @@ import PhotoBooth from './components/pages/photoBoothPage/photoBooth';
 import OceanCube from './components/pages/oceanCubeVoxelArt';
 import VisitorsBook from './components/pages/visitorPage/visitor';
 import RainyDay from './components/pages/rainyDayPage/rainyDay';
+import MojiChat from './components/pages/mojiChatPage/mojiChat';
 
 import Navbar from './components/Navbar';
 import type { Website } from './types';
@@ -92,7 +93,7 @@ const myWebsites: Website[] = [
   },
   {
     id: 9,
-    title: "Visitor's Book  ☁︎ ભઅુ?ˀ",
+    title: "Visitor's Book  ✎",
     description: "A visitor's Book that looks like a memo board web application where visitors can leave their thoughts and messages.",
     imageUrl: 'https://i.pinimg.com/736x/37/d8/97/37d8976aecf6d4fa478cddda322245a2.jpg',
     url: '/VisitorsBook',
@@ -107,6 +108,15 @@ const myWebsites: Website[] = [
     url: '/RainyDay',
     tags: ['Interactive Art', 'User Experience', 'Rain', 'Water Texture'],
     category: 'art'
+  },
+  {
+    id: 11,
+    title: 'Moji Chat',
+    description: 'A chat application that allows users to chat with AI that only uses emojis.',
+    imageUrl: 'https://images.hive.blog/p/C3TZR1g81UNaPs7vzNXHueW5ZM76DSHWEY7onmfLxcK2iQSL4HiAotpPC98ZWgtsbk12dYu4DRDwLfw4PHNo6S29szqjvE7peTX4S4D3hzhu5soz9jzzu4r?format=match&mode=fit&width=1536',
+    url: '/mojiChat',
+    tags: ['Chatting App', 'Web Application', 'AI', 'Chat', 'Emoji'],
+    category: 'playground'
   }
 ];
 
@@ -288,6 +298,8 @@ const App: React.FC = () => {
             <Route path="/project/8" element={<OceanCube />} />
             <Route path="/project/9" element={<VisitorsBook />} />
             <Route path="/project/10" element={<RainyDay />} />
+            <Route path="/project/11" element={<MojiChat />} />
+
             <Route path="/" element={<PortfolioContent />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
           </Routes>

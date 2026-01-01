@@ -12,12 +12,20 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({ data, scale = 1 }) => {
 
   return (
     <div
-      className="bg-paper shadow-2xl relative overflow-hidden flex flex-col md:flex-row w-full max-w-5xl mx-auto transition-all duration-500 h-full"
+      className="bg-paper shadow-2xl relative overflow-hidden flex flex-col md:flex-row w-full max-w-5xl mx-auto transition-all duration-500 h-full font-gowun"
       style={{
         transform: `scale(${scale})`,
         transformOrigin: 'top center'
       }}
     >
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+          .font-gowun {
+            font-family: 'Gowun Batang', serif;
+          }
+        `}
+      </style>
       {/* Visual Section */}
       <div className="w-full md:w-1/2 relative h-[400px] md:h-auto bg-stone-200">
         <img

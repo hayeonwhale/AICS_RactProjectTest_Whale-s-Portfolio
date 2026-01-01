@@ -89,7 +89,15 @@ const MovieCard: React.FC = () => {
 
     return (
         // 👇 [핵심] div로 변경, flex 제거, pt-40로 넉넉한 여백
-        <div className="bg-[#e8e6d9] min-h-screen w-full flex items-center justify-center relative px-4 pt-24">
+        <div className="bg-[#e8e6d9] min-h-screen w-full flex items-center justify-center relative px-4 pt-24 font-gowun">
+            <style>
+                {`
+                    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+                    .font-gowun, .font-kor {
+                        font-family: 'Gowun Batang', serif !important;
+                    }
+                `}
+            </style>
             
             {/* 👇 [핵심] z-[9999] 추가로 모든 레이어 뚫고 나오게 설정 */}
             <BackButton />

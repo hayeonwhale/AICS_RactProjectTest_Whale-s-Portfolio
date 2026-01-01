@@ -1,0 +1,5 @@
+{
+  "name": "MojiChat",
+  "description": "A cute, hand-drawn style chat application where the AI responds exclusively using Kaomoji and special characters.",
+  "requestFramePermissions": []
+}

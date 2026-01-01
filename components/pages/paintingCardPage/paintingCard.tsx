@@ -6,7 +6,7 @@ import { PosterData } from './Ptypes';
 
 // Default Data derived from the user's prompt (Monet's Poppy Field)
 const DEFAULT_POSTER: PosterData = {
-  // id: 0, // 👈 타입 에러 방지를 위해 id 추가
+  // id: 0,
   imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Claude_Monet_037.jpg/1200px-Claude_Monet_037.jpg",
   content: {
     title: "아르장퇴유 근처의 양귀비 들판",

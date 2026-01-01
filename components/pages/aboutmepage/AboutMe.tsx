@@ -115,7 +115,15 @@ const IntroCard: React.FC<{ profile?: Profile }> = ({ profile = defaultProfile }
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative px-4 pt-24 bg-slate-50">
+    <div className="min-h-screen w-full flex items-center justify-center relative px-4 pt-24 bg-slate-50 font-gowun">
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+          .font-gowun {
+            font-family: 'Gowun Batang', serif;
+          }
+        `}
+      </style>
       {/* 🔙 뒤로가기 버튼 (좌측 하단 배치) */}
       <BackButton />
 
