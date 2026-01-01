@@ -17,21 +17,31 @@ const App: React.FC = () => {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      const { scrollHeight, clientHeight } = chatContainerRef.current;
+      chatContainerRef.current.scrollTo({
+        top: scrollHeight - clientHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    // Only scroll if messages length increases (new message added by user or AI)
+    // Initial length is 1, so we wait for > 1 to avoid scroll on mount
+    if (messages.length > 1) {
+      scrollToBottom();
+    }
+  }, [messages.length]);
 
-  // Keep focus on input when loading finishes
+  // Keep focus on input when loading finishes, but prevent scroll
   useEffect(() => {
     if (!isLoading) {
-      inputRef.current?.focus();
+      inputRef.current?.focus({ preventScroll: true });
     }
   }, [isLoading]);
 
@@ -41,8 +51,8 @@ const App: React.FC = () => {
 
     const userText = input.trim();
     setInput('');
-    // Ensure focus remains immediately after submit
-    inputRef.current?.focus();
+    // Ensure focus remains immediately after submit, prevent scroll
+    inputRef.current?.focus({ preventScroll: true });
 
     const newUserMessage: Message = {
       id: Date.now().toString(),
@@ -130,7 +140,7 @@ const App: React.FC = () => {
           </header>
 
           {/* Chat Area */}
-          <main className="flex-1 overflow-y-auto p-4 space-y-4">
+          <main ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((msg) => (
               <ChatBubble key={msg.id} message={msg} />
             ))}
@@ -147,7 +157,6 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </main>
 
           {/* Input Area */}
@@ -162,7 +171,6 @@ const App: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type here..."
-                autoFocus
                 className="w-full bg-white text-lg text-gray-900 p-3 pr-4 border-2 border-gray-800 rounded-xl outline-none focus:bg-[#f0f8ff] focus:shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1)] transition-all placeholder:text-gray-300 disabled:opacity-50"
               />
               <Button

@@ -124,6 +124,9 @@ const Hero: React.FC = () => {
   const backgroundImages = [
     `${import.meta.env.BASE_URL}images/dayOcean.jpeg`,
     `${import.meta.env.BASE_URL}images/jellyfishOcean.jpeg`,
+    `${import.meta.env.BASE_URL}images/beach.jpg`,
+    `${import.meta.env.BASE_URL}images/cloudy.jpg`,
+    `${import.meta.env.BASE_URL}images/whaleDoll.jpg`
     // 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000', // Tech/Abstract
     // 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?auto=format&fit=crop&q=80&w=2000', // Books/Knowledge
     // 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=2000'  // Waterfall/Landscape

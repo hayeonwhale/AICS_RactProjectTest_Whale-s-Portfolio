@@ -58,8 +58,19 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen bg-stone-100 flex flex-col overflow-x-hidden">
-      {/* bg-stone-100 등 배경색을 살짝 넣어주면 메모가 더 잘 보입니다 (선택사항) */}
+    <div className="relative w-full min-h-screen bg-grid-pattern flex flex-col overflow-x-hidden">
+      <style>
+        {`
+          .bg-grid-pattern {
+            background-color: #ffffff;
+            background-image: 
+              linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+              linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+            background-size: 40px 40px;
+          }
+        `}
+      </style>
+      {/* Grid background applied via CSS class above */}
 
       {/* 뒤로가기 버튼 */}
       <BackButton />
