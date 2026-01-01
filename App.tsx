@@ -113,7 +113,7 @@ const myWebsites: Website[] = [
     id: 11,
     title: 'Moji Chat',
     description: 'A chat application that allows users to chat with AI that only uses emojis.',
-    imageUrl: 'https://images.hive.blog/p/C3TZR1g81UNaPs7vzNXHueW5ZM76DSHWEY7onmfLxcK2iQSL4HiAotpPC98ZWgtsbk12dYu4DRDwLfw4PHNo6S29szqjvE7peTX4S4D3hzhu5soz9jzzu4r?format=match&mode=fit&width=1536',
+    imageUrl: 'https://pbs.twimg.com/media/D5thAKDUUAAC_Q6.jpg',
     url: '/mojiChat',
     tags: ['Chatting App', 'Web Application', 'AI', 'Chat', 'Emoji'],
     category: 'playground'
