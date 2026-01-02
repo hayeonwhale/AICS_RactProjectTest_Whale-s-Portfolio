@@ -1,11 +1,12 @@
-import { GoogleGenAI, Content } from "@google/genai";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { Message, Sender } from "../chatTypes";
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 if (!apiKey) {
   console.error("Missing VITE_GEMINI_API_KEY in environment variables");
 }
-const ai = new GoogleGenAI({ apiKey });
+
+const genAI = new GoogleGenerativeAI(apiKey);
 
 const SYSTEM_INSTRUCTION = `
 You are a cute, playful robot AI.
@@ -24,30 +25,50 @@ Your goal is to express understanding, emotions, and answers solely through thes
 
 export const sendMessageToGemini = async (history: Message[], newMessage: string): Promise<string> => {
   try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3-flash-preview",
+      systemInstruction: SYSTEM_INSTRUCTION,
+    });
+
     // Convert app history to Gemini Content format
-    const contents: Content[] = history.map((msg) => ({
+    // Note: 'sender' in history uses Sender.USER/Sender.AI. 
+    // GoogleGenerativeAI expects 'user'/'model'.
+    let conversationHistory = history.map((msg) => ({
       role: msg.sender === Sender.USER ? "user" : "model",
       parts: [{ text: msg.text }],
     }));
 
-    // Add the new message
-    contents.push({
-      role: "user",
-      parts: [{ text: newMessage }],
-    });
+    // Gemini API requires the first message to be from 'user'.
+    // If the history starts with 'model' (e.g. initial greeting), remove it.
+    if (conversationHistory.length > 0 && conversationHistory[0].role === "model") {
+      conversationHistory = conversationHistory.slice(1);
+    }
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: contents,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        temperature: 1.2, // High temperature for more creative/varied kaomojis
+    // Generate content using the proper SDK method
+    const result = await model.generateContent({
+      contents: [
+        ...conversationHistory,
+        { role: "user", parts: [{ text: newMessage }] }
+      ],
+      generationConfig: {
+        temperature: 1.2,
       },
+      safetySettings: [
+        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      ],
     });
 
-    return response.text || "(?_?)";
-  } catch (error) {
-    console.error("Gemini API Error:", error);
+    const response = await result.response;
+    return response.text() || "(?_?)";
+  } catch (error: any) {
+    console.error("Gemini API Error Full Details:", error);
+    // Return the actual error message if possible for debugging, or the fallback
+    if (error.message?.includes("400")) {
+      console.error("This is likely a history format error (Model first).");
+    }
     return "(x_x) ...!";
   }
 };

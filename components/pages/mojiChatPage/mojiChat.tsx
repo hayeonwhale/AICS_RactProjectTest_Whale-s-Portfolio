@@ -130,7 +130,7 @@ const App: React.FC = () => {
               <div className="flex flex-col">
                 <h1 className="text-2xl font-bold leading-none text-gray-900 tracking-wide">MojiChat</h1>
                 <p className="text-xs text-gray-800 font-bold bg-white/50 px-2 py-0.5 rounded-full inline-block mt-0.5 self-start">
-                  Secret Moji Talk 🎀
+                  Only Emoji Talk 🎀
                 </p>
               </div>
             </div>
