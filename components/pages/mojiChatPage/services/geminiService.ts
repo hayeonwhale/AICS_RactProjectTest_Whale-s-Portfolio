@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { Message, Sender } from "../chatTypes";
 
-const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 if (!apiKey) {
-  console.error("Missing VITE_GOOGLE_API_KEY in environment variables");
+  console.error("Missing VITE_GEMINI_API_KEY in environment variables");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -27,7 +27,7 @@ Your goal is to express understanding, emotions, and answers solely through thes
 export const sendMessageToGemini = async (history: Message[], newMessage: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+      model: "gemini-flash-latest",
       systemInstruction: SYSTEM_INSTRUCTION,
     });
 
@@ -66,10 +66,24 @@ export const sendMessageToGemini = async (history: Message[], newMessage: string
     return response.text() || "(?_?)";
   } catch (error: any) {
     console.error("Gemini API Error Full Details:", error);
-    // Return the actual error message if possible for debugging, or the fallback
+
+    // Handle 404 (Model Not Found) - Should be fixed by now, but good to keep
+    if (error.message?.includes("404")) {
+      console.error("Model not found. Please check model name.");
+      return "(?_?) (Model Error)";
+    }
+
+    // Handle 429 (Too Many Requests / Quota Exceeded)
+    if (error.message?.includes("429") || error.status === 429) {
+      console.warn("Rate limit exceeded.");
+      return "(@_@) ... (Tired! Wait 1 min)";
+    }
+
+    // Handle 400 (Bad Request - often history format)
     if (error.message?.includes("400")) {
       console.error("This is likely a history format error (Model first).");
     }
+
     return "(x_x) ...!";
   }
 };

@@ -118,6 +118,7 @@ const myWebsites: Website[] = [
     tags: ['Chatting App', 'Web Application', 'AI', 'Chat', 'Emoji'],
     category: 'playground'
   }
+
 ];
 
 const Hero: React.FC = () => {
