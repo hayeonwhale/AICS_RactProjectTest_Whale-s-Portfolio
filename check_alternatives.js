@@ -4,7 +4,7 @@ const API_KEY = "AIzaSyBZKYYjYQNdWbSETLBzZvG_mz5SRzpWnRM";
 const genAI = new generativeAi.GoogleGenerativeAI(API_KEY);
 
 async function testModels() {
-    const models = ["gemini-2.0-flash", "gemini-flash-latest"];
+    const models = ["gemini-2.5-flash-lite"];
 
     for (const modelName of models) {
         console.log(`Testing ${modelName}...`);

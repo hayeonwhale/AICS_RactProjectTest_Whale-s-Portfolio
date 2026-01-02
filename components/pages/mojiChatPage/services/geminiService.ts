@@ -27,7 +27,7 @@ Your goal is to express understanding, emotions, and answers solely through thes
 export const sendMessageToGemini = async (history: Message[], newMessage: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-flash-latest",
+      model: "gemini-2.5-flash-lite",
       systemInstruction: SYSTEM_INSTRUCTION,
     });
 
