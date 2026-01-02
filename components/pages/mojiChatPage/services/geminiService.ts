@@ -1,9 +1,10 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { Message, Sender } from "../chatTypes";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+
 if (!apiKey) {
-  console.error("Missing VITE_GEMINI_API_KEY in environment variables");
+  console.error("Missing VITE_GOOGLE_API_KEY in environment variables");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
