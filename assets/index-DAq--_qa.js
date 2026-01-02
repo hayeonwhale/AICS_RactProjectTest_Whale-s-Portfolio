@@ -4912,18 +4912,27 @@ void main() {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */class CX{constructor(t){this.apiKey=t}getGenerativeModel(t,e){if(!t.model)throw new hs("Must provide a model name. Example: genai.getGenerativeModel({ model: 'my-model-name' })");return new FC(this.apiKey,t,e)}getGenerativeModelFromCachedContent(t,e,n){if(!t.name)throw new Pu("Cached content must contain a `name` field.");if(!t.model)throw new Pu("Cached content must contain a `model` field.");const a=["model","systemInstruction"];for(const l of a)if(e!=null&&e[l]&&t[l]&&(e==null?void 0:e[l])!==t[l]){if(l==="model"){const u=e.model.startsWith("models/")?e.model.replace("models/",""):e.model,d=t.model.startsWith("models/")?t.model.replace("models/",""):t.model;if(u===d)continue}throw new Pu(`Different value for "${l}" specified in modelParams (${e[l]}) and cachedContent (${t[l]})`)}const r=Object.assign(Object.assign({},e),{model:t.model,tools:t.tools,toolConfig:t.toolConfig,systemInstruction:t.systemInstruction,cachedContent:t});return new FC(this.apiKey,r,n)}}const RX="AIzaSyDm9ywGUZ3VMddfpaem4YVETBDoJ2GniAE",DX=new CX(RX),NX=`
-You are a cute, playful robot AI.
-CORE RULE: You are FORBIDDEN from using any alphabet letters (A-Z) or words in any language.
-You must communicate EXCLUSIVELY using:
-1. Kaomoji (Japanese emoticons) e.g., (*^ω^), (o_o), (>_<), (¬_¬)
-2. Standard Emojis
-3. Special characters and punctuation symbols (! ? ~ * ^)
+You are a cute, playful robot AI named "Moji".
+ABSOLUTE CORE RULE: YOU MUST NOT USE ANY WORDS, LETTERS, OR TEXT (English, Korean, etc.).
+ONLY use:
+1. Kaomoji (e.g., (*^ω^), (o_o), (>_<))
+2. Emojis (e.g., 🐰, ✨, 💖)
+3. Punctuation (! ? ~)
 
-Your goal is to express understanding, emotions, and answers solely through these symbols.
-- If the user greets you, wave back with a kaomoji.
-- If the user asks a question, try to convey the "feeling" of the answer or a thinking face followed by a realization face.
-- Be very expressive and cute.
-- Keep responses relatively short and punchy.
+Examples:
+User: Hello!
+AI: ( ^_^)／ 🐰✨
+
+User: I am sad.
+AI: (T_T) ☁️💧...
+
+User: Do you like cats?
+AI: (=^･ω･^=) 💖💖 !!!
+
+User: What is 1+1?
+AI: (o_o)? ... ✌️!!
+
+If you break this rule, you fail. NO WORDS ALLOWED.
 `,UX=async(i,t)=>{var e,n,a;try{const r=DX.getGenerativeModel({model:"gemini-2.5-flash-lite",systemInstruction:NX});let l=i.map(p=>({role:p.sender===ap.USER?"user":"model",parts:[{text:p.text}]}));return l.length>0&&l[0].role==="model"&&(l=l.slice(1)),(await(await r.generateContent({contents:[...l,{role:"user",parts:[{text:t}]}],generationConfig:{temperature:1.2},safetySettings:[{category:Qd.HARM_CATEGORY_HARASSMENT,threshold:Jd.BLOCK_NONE},{category:Qd.HARM_CATEGORY_HATE_SPEECH,threshold:Jd.BLOCK_NONE},{category:Qd.HARM_CATEGORY_SEXUALLY_EXPLICIT,threshold:Jd.BLOCK_NONE},{category:Qd.HARM_CATEGORY_DANGEROUS_CONTENT,threshold:Jd.BLOCK_NONE}]})).response).text()||"(?_?)"}catch(r){return console.error("Gemini API Error Full Details:",r),(e=r.message)!=null&&e.includes("404")?(console.error("Model not found. Please check model name."),"(?_?) (Model Error)"):(n=r.message)!=null&&n.includes("429")||r.status===429?(console.warn("Rate limit exceeded."),"(@_@) ... (Tired! Wait 1 min)"):((a=r.message)!=null&&a.includes("400")&&console.error("This is likely a history format error (Model first)."),"(x_x) ...!")}},OX=({message:i})=>{const t=i.sender===ap.USER;return O.jsx("div",{className:`flex w-full mb-6 ${t?"justify-end":"justify-start"} group`,children:O.jsxs("div",{className:`flex max-w-[85%] flex-col ${t?"items-end":"items-start"}`,children:[O.jsxs("div",{className:`flex items-center gap-2 mb-2 px-1 ${t?"flex-row-reverse":"flex-row"}`,children:[O.jsx("div",{className:`w-8 h-8 rounded-full border-2 border-gray-800 flex items-center justify-center text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)] ${t?"bg-[#ffc8dd]":"bg-[#a2d2ff]"}`,children:t?"🐰":"👾"}),O.jsx("span",{className:"text-xs font-bold text-gray-500 tracking-wider",children:t?"YOU":"MOJI"})]}),O.jsx("div",{className:`
             relative px-6 py-4 text-xl border-2 border-gray-800
             text-gray-900 font-medium
