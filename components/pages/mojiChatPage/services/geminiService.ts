@@ -36,7 +36,7 @@ If you break this rule, you fail. NO WORDS ALLOWED.
 export const sendMessageToGemini = async (history: Message[], newMessage: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
+      model: "gemini-3-flash-preview",
       systemInstruction: SYSTEM_INSTRUCTION,
     });
 
