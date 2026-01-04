@@ -5,6 +5,8 @@ const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 if (!apiKey) {
   console.error("Missing VITE_GEMINI_API_KEY in environment variables");
+} else {
+  console.log("Gemini API Key loaded successfully (Masked: " + apiKey.substring(0, 4) + "***)");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
@@ -36,7 +38,7 @@ If you break this rule, you fail. NO WORDS ALLOWED.
 export const sendMessageToGemini = async (history: Message[], newMessage: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.0-flash",
       systemInstruction: SYSTEM_INSTRUCTION,
     });
 

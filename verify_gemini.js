@@ -26,7 +26,7 @@ console.log(`✅ Found API Key (starts with: ${API_KEY.substring(0, 4)}...)`);
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-const modelsToTest = ["gemini-3-flash-preview", "gemini-2.5-flash-lite", "gemini-2.0-flash-exp"];
+const modelsToTest = ["gemini-2.0-flash"];
 
 async function verify() {
     console.log("🚀 Starting Gemini Model Verification...\n");
