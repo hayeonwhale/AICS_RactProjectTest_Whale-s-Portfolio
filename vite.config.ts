@@ -11,5 +11,5 @@ export default defineConfig({
     ]
   },
   // 👇 여기가 중요합니다! 저장소 이름 앞뒤로 슬래시(/)가 있어야 해요.
-  base: '/AICS_RactProjectTest_Whale-s-Portfolio/',
+  base: '/',
 })

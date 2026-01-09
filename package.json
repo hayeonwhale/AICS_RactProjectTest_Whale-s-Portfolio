@@ -1,5 +1,5 @@
 {
-  "homepage": "https://hayeonwhale.github.io/AICS_RactProjectTest_Whale-s-Portfolio",
+  "homepage": "http://haylen071208.waymakerschool.org/",
   "name": "whales-portfolio",
   "private": true,
   "version": "0.0.0",
@@ -28,7 +28,10 @@
   "devDependencies": {
     "@types/node": "^22.19.3",
     "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.23",
     "gh-pages": "^6.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
